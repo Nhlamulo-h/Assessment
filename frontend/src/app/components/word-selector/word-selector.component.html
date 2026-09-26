@@ -1,0 +1,88 @@
+<section class="word-selector-card">
+  <div class="card-header">
+    <div class="header-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+      </svg>
+    </div>
+    <div>
+      <h2 class="card-title">Grammar Categories</h2>
+      <p class="card-subtitle">Select a word type to explore vocabulary and append to your sentence</p>
+    </div>
+  </div>
+
+  <!-- US-01: Word Types Navigation (Pills/Tabs) -->
+  <div class="types-bar" role="tablist" aria-label="Grammatical Word Types">
+    @for (type of sentenceService.wordTypes(); track type.id) {
+      <button
+        type="button"
+        role="tab"
+        [id]="'tab-' + type.code"
+        [attr.aria-selected]="sentenceService.selectedType()?.id === type.id"
+        class="type-pill"
+        [class.active]="sentenceService.selectedType()?.id === type.id"
+        [style.--pill-color]="type.color_code"
+        (click)="onSelectType(type)"
+      >
+        <span class="type-dot" [style.background-color]="type.color_code"></span>
+        <span class="type-name">{{ type.name }}</span>
+      </button>
+    }
+  </div>
+
+  <!-- Active Category Metadata -->
+  @if (sentenceService.selectedType(); as activeType) {
+    <div class="active-category-banner" [style.border-left-color]="activeType.color_code">
+      <div class="category-meta">
+        <span class="category-title" [style.color]="activeType.color_code">{{ activeType.name }}</span>
+        <span class="category-desc">{{ activeType.description }}</span>
+      </div>
+      <span class="word-count-badge">
+        {{ sentenceService.wordsForSelectedType().length }} words available
+      </span>
+    </div>
+  }
+
+  <!-- US-02: Words Grid -->
+  <div class="words-container">
+    @if (sentenceService.wordsForSelectedType().length === 0) {
+      <div class="empty-words-state">
+        <p>No words loaded for this category yet.</p>
+      </div>
+    } @else {
+      <div class="words-grid" role="group" aria-label="Available Words">
+        @for (word of sentenceService.wordsForSelectedType(); track word.id) {
+          <button
+            type="button"
+            class="word-chip-btn"
+            [id]="'word-btn-' + word.id"
+            [style.--btn-hover-border]="sentenceService.selectedType()?.color_code"
+            (click)="onAddWord(word)"
+            title="Click to add '{{ word.text }}' to sentence"
+          >
+            <span class="add-icon">+</span>
+            <span class="word-text">{{ word.text }}</span>
+          </button>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Quick Punctuation Toolbar -->
+  <div class="punctuation-section">
+    <span class="punctuation-label">Quick Punctuation:</span>
+    <div class="punctuation-buttons">
+      @for (punc of punctuations; track punc) {
+        <button
+          type="button"
+          class="punc-btn"
+          (click)="onAddPunctuation(punc)"
+          [title]="'Add ' + punc"
+        >
+          {{ punc }}
+        </button>
+      }
+    </div>
+  </div>
+</section>

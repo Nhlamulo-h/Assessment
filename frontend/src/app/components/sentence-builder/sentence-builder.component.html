@@ -1,0 +1,142 @@
+<section class="sentence-builder-card">
+  <!-- Header / Mode Banner -->
+  <div class="card-header">
+    <div class="header-left">
+      <div class="header-icon" [class.edit-mode-icon]="sentenceService.isEditing()">
+        @if (sentenceService.isEditing()) {
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+          </svg>
+        } @else {
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        }
+      </div>
+      <div>
+        <div class="title-row">
+          <h2 class="card-title">
+            {{ sentenceService.isEditing() ? 'Edit Sentence' : 'Sentence Canvas' }}
+          </h2>
+          @if (sentenceService.isEditing()) {
+            <span class="edit-badge">Editing #{{ sentenceService.editingSentenceId() }}</span>
+          }
+        </div>
+        <p class="card-subtitle">
+          {{ sentenceService.isEditing()
+              ? 'Modify word sequence, add or remove elements, then update.'
+              : 'Select words from above to construct your sentence dynamically.' }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Word & Character Counts -->
+    <div class="stats-group">
+      <div class="stat-pill">
+        <span class="stat-num">{{ sentenceService.wordCount() }}</span>
+        <span class="stat-label">Words</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-num">{{ sentenceService.assembledText().length }}</span>
+        <span class="stat-label">Chars</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- US-03: Dynamic Sentence Canvas with Word Chips -->
+  <div class="canvas-area" [class.has-tokens]="sentenceService.sentenceTokens().length > 0">
+    @if (sentenceService.sentenceTokens().length === 0) {
+      <div class="canvas-placeholder">
+        <div class="placeholder-icon">✍️</div>
+        <p class="placeholder-title">Your sentence will take shape here</p>
+        <p class="placeholder-desc">Click any word from the categories above or select a saved sentence to edit</p>
+      </div>
+    } @else {
+      <div class="tokens-flow">
+        @for (token of sentenceService.sentenceTokens(); track token.id; let idx = $index) {
+          <div class="sentence-token-chip" [style.--token-color]="token.typeColor">
+            <span class="token-text">{{ token.text }}</span>
+            <button
+              type="button"
+              class="token-remove-btn"
+              (click)="onRemoveToken(idx)"
+              [title]="'Remove ' + token.text"
+              aria-label="Remove word"
+            >
+              &times;
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Live Formatted Preview String -->
+  @if (sentenceService.sentenceTokens().length > 0) {
+    <div class="formatted-preview-box">
+      <span class="preview-tag">Preview:</span>
+      <p class="preview-text">"{{ sentenceService.assembledText() }}"</p>
+    </div>
+  }
+
+  <!-- Action Buttons: Save (POST), Update (PUT), Cancel, Clear -->
+  <div class="canvas-actions">
+    <div class="action-left">
+      <button
+        type="button"
+        class="btn-secondary"
+        (click)="onClear()"
+        [disabled]="sentenceService.sentenceTokens().length === 0"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="3 6 5 6 21 6"></polyline>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+        </svg>
+        Clear Canvas
+      </button>
+
+      @if (sentenceService.isEditing()) {
+        <button
+          type="button"
+          class="btn-outline"
+          (click)="onCancelEdit()"
+        >
+          Cancel Edit
+        </button>
+      }
+    </div>
+
+    <div class="action-right">
+      <!-- US-04 (Save POST) & US-05 (Update PUT) -->
+      <button
+        type="button"
+        class="btn-primary"
+        [class.btn-update]="sentenceService.isEditing()"
+        (click)="onSaveOrUpdate()"
+        [disabled]="sentenceService.sentenceTokens().length === 0 || sentenceService.isLoading()"
+      >
+        @if (sentenceService.isLoading()) {
+          <span class="spinner"></span>
+          Saving...
+        } @else if (sentenceService.isEditing()) {
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          Update Sentence (PUT)
+        } @else {
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+          Save Sentence (POST)
+        }
+      </button>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,118 @@
+<section class="saved-sentences-card">
+  <!-- Card Header -->
+  <div class="card-header">
+    <div class="header-left">
+      <div class="header-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+        </svg>
+      </div>
+      <div>
+        <h2 class="card-title">Saved Sentences</h2>
+        <p class="card-subtitle">All sentences persisted in the database (US-06)</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button
+        type="button"
+        class="refresh-btn"
+        (click)="onRefresh()"
+        title="Refresh sentences from database"
+        [disabled]="sentenceService.isLoading()"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <polyline points="1 20 1 14 7 14"></polyline>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+        </svg>
+        Refresh
+      </button>
+      <span class="total-badge">
+        {{ sentenceService.savedSentences().length }} Saved
+      </span>
+    </div>
+  </div>
+
+  <!-- Search Filter -->
+  @if (sentenceService.savedSentences().length > 0) {
+    <div class="search-bar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="search-icon">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input
+        type="text"
+        placeholder="Filter saved sentences..."
+        class="search-input"
+        [value]="searchQuery()"
+        (input)="onSearchChange($event)"
+      />
+    </div>
+  }
+
+  <!-- Sentences List (US-06) -->
+  <div class="sentences-list">
+    @if (sentenceService.savedSentences().length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">📁</div>
+        <p class="empty-title">No sentences saved yet</p>
+        <p class="empty-desc">Construct a sentence above and click "Save Sentence" to persist it to PostgreSQL.</p>
+      </div>
+    } @else if (filteredSentences().length === 0) {
+      <div class="empty-state">
+        <p class="empty-title">No matching sentences found</p>
+        <p class="empty-desc">Try modifying your filter keyword.</p>
+      </div>
+    } @else {
+      @for (sentence of filteredSentences(); track sentence.id) {
+        <article
+          class="sentence-row"
+          [class.active-edit-row]="sentenceService.editingSentenceId() === sentence.id"
+        >
+          <div class="sentence-meta">
+            <span class="sentence-id">#{{ sentence.id }}</span>
+            <span class="sentence-time" title="Last Updated">
+              {{ sentence.updated_at | date:'medium' }}
+            </span>
+            @if (sentenceService.editingSentenceId() === sentence.id) {
+              <span class="currently-editing-pill">Currently Editing</span>
+            }
+          </div>
+
+          <p class="sentence-content">"{{ sentence.text }}"</p>
+
+          <div class="sentence-actions">
+            <!-- US-05: Load into editor to edit sentence -->
+            <button
+              type="button"
+              class="action-btn edit-btn"
+              (click)="onEdit(sentence)"
+              title="Load into editor to modify"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+              </svg>
+              Edit
+            </button>
+
+            <!-- Delete action -->
+            <button
+              type="button"
+              class="action-btn delete-btn"
+              (click)="onDelete(sentence.id)"
+              title="Delete sentence"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+              Delete
+            </button>
+          </div>
+        </article>
+      }
+    }
+  </div>
+</section>

@@ -1,0 +1,76 @@
+<div class="app-layout">
+  <!-- Navigation / Top Header -->
+  <header class="app-header">
+    <div class="header-inner container">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="4 7 4 4 20 4 20 7"></polyline>
+            <line x1="9" y1="20" x2="15" y2="20"></line>
+            <line x1="12" y1="4" x2="12" y2="20"></line>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title-wrap">
+            <h1 class="brand-title">Sentence Builder</h1>
+            <span class="version-tag">Angular 18 &bull; Express &bull; Postgres</span>
+          </div>
+          <p class="brand-tagline">Dynamic grammatical sentence construction & persistence</p>
+        </div>
+      </div>
+
+      <div class="header-stats">
+        <div class="stat-badge">
+          <span class="stat-dot pulse"></span>
+          <span>API Connected</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Notification Banner (Toast) -->
+  <div class="container alerts-container">
+    @if (sentenceService.errorMessage(); as errorMsg) {
+      <div class="alert alert-error" role="alert">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-content">{{ errorMsg }}</div>
+        <button type="button" class="alert-close" (click)="onDismissAlert()">&times;</button>
+      </div>
+    }
+
+    @if (sentenceService.successMessage(); as successMsg) {
+      <div class="alert alert-success" role="alert">
+        <div class="alert-icon">✅</div>
+        <div class="alert-content">{{ successMsg }}</div>
+        <button type="button" class="alert-close" (click)="onDismissAlert()">&times;</button>
+      </div>
+    }
+  </div>
+
+  <!-- Main Application Body -->
+  <main class="app-main container">
+    <div class="dashboard-grid">
+      <!-- Left Column: Word Selection & Sentence Builder -->
+      <div class="primary-column">
+        <!-- US-03, US-04, US-05: Sentence Canvas / Builder -->
+        <app-sentence-builder></app-sentence-builder>
+
+        <!-- US-01, US-02: Word Categories & Words Grid -->
+        <app-word-selector></app-word-selector>
+      </div>
+
+      <!-- Right Column: Saved Sentences List (US-06) -->
+      <aside class="sidebar-column">
+        <app-saved-sentences></app-saved-sentences>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="container footer-inner">
+      <p>Sentence Builder Application &bull; Full-Stack Assessment</p>
+      <p class="tech-stack-list">Angular 18+ (Signals & Standalone) &bull; Node.js Express &bull; PostgreSQL</p>
+    </div>
+  </footer>
+</div>
