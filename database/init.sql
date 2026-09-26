@@ -24,7 +24,7 @@ CREATE TABLE words (
     word_type_id INTEGER NOT NULL REFERENCES word_types(id) ON DELETE CASCADE,
     text VARCHAR(100) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT uq_word_type_text UNIQUE (word_type_id, text)
+    CONSTRAINT uq_word_type_text UNIQUE (word_type_id, text) 
 );
 
 -- Index for high-performance lookup of words by word_type_id
