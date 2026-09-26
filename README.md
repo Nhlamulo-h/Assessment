@@ -1,7 +1,5 @@
 # Dynamic Sentence Builder — Full-Stack Application
 
-A production-ready full-stack web application designed and built for the **1Life Full-Stack Development Technical Assessment**.
-
 The application allows users to interactively construct grammatical sentences by picking words categorized by their grammatical parts of speech, persist them to a PostgreSQL database, inspect saved sentences, and reload them into an interactive canvas for editing.
 
 ---
