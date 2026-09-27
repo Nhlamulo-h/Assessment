@@ -1,12 +1,13 @@
 .word-selector-card {
-  background: #ffffff;
+  background: var(--bg-card);
   border-radius: 16px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-card);
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .card-header {
@@ -19,8 +20,8 @@
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: #eff6ff;
-  color: #2563eb;
+  background: rgba(37, 99, 235, 0.12);
+  color: #3b82f6;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,14 +32,14 @@
   margin: 0;
   font-size: 1.25rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-main);
   letter-spacing: -0.01em;
 }
 
 .card-subtitle {
   margin: 2px 0 0 0;
   font-size: 0.875rem;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 /* Tabs / Category Pills */
@@ -55,9 +56,9 @@
   gap: 8px;
   padding: 8px 16px;
   border-radius: 9999px;
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
-  color: #334155;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-main);
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
@@ -66,16 +67,16 @@
 }
 
 .type-pill:hover {
-  background: #f1f5f9;
-  border-color: #cbd5e1;
+  background: var(--bg-hover);
+  border-color: var(--border-subtle);
   transform: translateY(-1px);
 }
 
 .type-pill.active {
-  background: #0f172a;
+  background: #2563eb;
   color: #ffffff;
-  border-color: #0f172a;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+  border-color: #2563eb;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
 }
 
 .type-dot {
@@ -91,10 +92,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px 16px;
-  background: #f8fafc;
+  background: var(--bg-secondary);
   border-radius: 10px;
   border-left: 4px solid #2563eb;
   gap: 12px;
+  transition: background-color 0.25s ease;
 }
 
 .category-meta {
@@ -110,15 +112,15 @@
 
 .category-desc {
   font-size: 0.813rem;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .word-count-badge {
   font-size: 0.75rem;
   font-weight: 600;
   padding: 4px 10px;
-  background: #e2e8f0;
-  color: #475569;
+  background: var(--border-color);
+  color: var(--text-muted);
   border-radius: 6px;
   white-space: nowrap;
 }
@@ -140,9 +142,9 @@
   gap: 6px;
   padding: 9px 16px;
   border-radius: 10px;
-  background: #f8fafc;
-  border: 1.5px solid #e2e8f0;
-  color: #1e293b;
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border-color);
+  color: var(--text-main);
   font-size: 0.938rem;
   font-weight: 500;
   cursor: pointer;
@@ -151,11 +153,11 @@
 }
 
 .word-chip-btn:hover {
-  background: #ffffff;
+  background: var(--bg-card);
   border-color: var(--btn-hover-border, #3b82f6);
   transform: translateY(-2px);
-  box-shadow: 0 6px 14px -2px rgba(59, 130, 246, 0.18);
-  color: #0f172a;
+  box-shadow: 0 6px 14px -2px rgba(59, 130, 246, 0.25);
+  color: var(--text-main);
 }
 
 .word-chip-btn:active {
@@ -165,7 +167,7 @@
 .add-icon {
   font-size: 1rem;
   font-weight: 700;
-  color: #94a3b8;
+  color: var(--text-sub);
   transition: color 0.15s ease;
 }
 
@@ -179,10 +181,10 @@
   align-items: center;
   justify-content: center;
   height: 140px;
-  color: #94a3b8;
+  color: var(--text-sub);
   font-size: 0.875rem;
   font-style: italic;
-  border: 2px dashed #e2e8f0;
+  border: 2px dashed var(--border-color);
   border-radius: 12px;
 }
 
@@ -192,13 +194,13 @@
   align-items: center;
   gap: 12px;
   padding-top: 12px;
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid var(--border-color);
 }
 
 .punctuation-label {
   font-size: 0.813rem;
   font-weight: 600;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .punctuation-buttons {
@@ -214,19 +216,19 @@
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  border: 1px solid #cbd5e1;
-  background: #ffffff;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
   font-size: 1rem;
   font-weight: 700;
-  color: #334155;
+  color: var(--text-main);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .punc-btn:hover {
-  background: #f1f5f9;
-  border-color: #94a3b8;
-  color: #0f172a;
+  background: var(--bg-hover);
+  border-color: var(--border-subtle);
+  color: #3b82f6;
 }
 
 @media (max-width: 640px) {

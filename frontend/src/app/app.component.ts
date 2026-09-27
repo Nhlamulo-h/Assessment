@@ -4,6 +4,7 @@ import { WordSelectorComponent } from './components/word-selector/word-selector.
 import { SentenceBuilderComponent } from './components/sentence-builder/sentence-builder.component';
 import { SavedSentencesComponent } from './components/saved-sentences/saved-sentences.component';
 import { SentenceService } from './core/services/sentence.service';
+import { ThemeService } from './core/services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +20,13 @@ import { SentenceService } from './core/services/sentence.service';
 })
 export class AppComponent {
   public sentenceService = inject(SentenceService);
+  public themeService = inject(ThemeService);
 
   onDismissAlert(): void {
     this.sentenceService.clearMessages();
+  }
+
+  onToggleTheme(): void {
+    this.themeService.toggleTheme();
   }
 }
