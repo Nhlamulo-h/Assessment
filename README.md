@@ -233,7 +233,7 @@ npm start
 
 ---
 
-## ☁️ Microsoft Azure Deployment Guide (Bonus Requirement)
+## ☁️ Microsoft Azure Deployment Guide
 
 To deploy this solution to Microsoft Azure, follow this recommended production architecture:
 
