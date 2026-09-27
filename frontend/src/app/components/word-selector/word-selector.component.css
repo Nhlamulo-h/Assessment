@@ -42,7 +42,6 @@
   color: var(--text-muted);
 }
 
-/* Tabs / Category Pills */
 .types-bar {
   display: flex;
   flex-wrap: wrap;
@@ -86,7 +85,6 @@
   flex-shrink: 0;
 }
 
-/* Active Category Meta Banner */
 .active-category-banner {
   display: flex;
   align-items: center;
@@ -125,7 +123,6 @@
   white-space: nowrap;
 }
 
-/* Words Grid */
 .words-container {
   min-height: 180px;
 }
@@ -175,7 +172,6 @@
   color: var(--btn-hover-border, #3b82f6);
 }
 
-/* Empty Words */
 .empty-words-state {
   display: flex;
   align-items: center;
@@ -188,7 +184,6 @@
   border-radius: 12px;
 }
 
-/* Punctuation Toolbar */
 .punctuation-section {
   display: flex;
   align-items: center;

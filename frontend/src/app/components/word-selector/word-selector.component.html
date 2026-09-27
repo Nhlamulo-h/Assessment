@@ -12,7 +12,6 @@
     </div>
   </div>
 
-  <!-- US-01: Word Types Navigation (Pills/Tabs) -->
   <div class="types-bar" role="tablist" aria-label="Grammatical Word Types">
     @for (type of sentenceService.wordTypes(); track type.id) {
       <button
@@ -31,7 +30,6 @@
     }
   </div>
 
-  <!-- Active Category Metadata -->
   @if (sentenceService.selectedType(); as activeType) {
     <div class="active-category-banner" [style.border-left-color]="activeType.color_code">
       <div class="category-meta">
@@ -44,7 +42,6 @@
     </div>
   }
 
-  <!-- US-02: Words Grid -->
   <div class="words-container">
     @if (sentenceService.wordsForSelectedType().length === 0) {
       <div class="empty-words-state">
@@ -69,7 +66,6 @@
     }
   </div>
 
-  <!-- Quick Punctuation Toolbar -->
   <div class="punctuation-section">
     <span class="punctuation-label">Quick Punctuation:</span>
     <div class="punctuation-buttons">

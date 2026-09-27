@@ -1,14 +1,9 @@
 const db = require('../config/db');
 
-/**
- * Controller: GET /api/words/:typeId
- * Retrieves all words belonging to a specific word type.
- */
 const getWordsByTypeId = async (req, res, next) => {
   try {
     const { typeId } = req.params;
 
-    // Check if word type exists
     const typeCheck = await db.query(
       'SELECT id, name, code, color_code FROM word_types WHERE id = $1',
       [typeId]
@@ -44,10 +39,6 @@ const getWordsByTypeId = async (req, res, next) => {
   }
 };
 
-/**
- * Optional Bonus Controller: GET /api/words
- * Retrieves all words grouped or flat across all types.
- */
 const getAllWords = async (req, res, next) => {
   try {
     const result = await db.query(

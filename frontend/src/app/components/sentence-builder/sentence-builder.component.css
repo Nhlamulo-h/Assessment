@@ -100,7 +100,6 @@
   text-transform: uppercase;
 }
 
-/* Canvas Area */
 .canvas-area {
   min-height: 140px;
   background: var(--bg-input);
@@ -146,7 +145,6 @@
   max-width: 320px;
 }
 
-/* Flow of Tokens */
 .tokens-flow {
   display: flex;
   flex-wrap: wrap;
@@ -161,7 +159,7 @@
   padding: 8px 14px;
   background: var(--bg-secondary);
   border-radius: 10px;
-  border-left: 4px solid var(--token-color, #3b82f6);
+  border-left: 4px solid var(--token-color, #6366F1);
   border-top: 1px solid var(--border-color);
   border-right: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
@@ -203,7 +201,6 @@
   background: rgba(239, 68, 68, 0.15);
 }
 
-/* Formatted Preview Box */
 .formatted-preview-box {
   background: var(--preview-bg);
   border: 1px solid var(--preview-border);
@@ -233,7 +230,6 @@
   font-style: italic;
 }
 
-/* Action Buttons */
 .canvas-actions {
   display: flex;
   align-items: center;

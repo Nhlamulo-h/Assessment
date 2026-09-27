@@ -1,9 +1,5 @@
 const db = require('../config/db');
 
-/**
- * Controller: GET /api/word-types
- * Retrieves all 9 grammatical types.
- */
 const getAllWordTypes = async (req, res, next) => {
   try {
     const result = await db.query(

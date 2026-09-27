@@ -1,6 +1,3 @@
-/**
- * Middleware to validate sentence request payload (POST and PUT)
- */
 const validateSentence = (req, res, next) => {
   const { text } = req.body;
 
@@ -31,14 +28,10 @@ const validateSentence = (req, res, next) => {
     });
   }
 
-  // Trim and normalize multiple spaces
   req.body.text = text.trim().replace(/\s+/g, ' ');
   next();
 };
 
-/**
- * Middleware to validate route parameter ID
- */
 const validateIdParam = (req, res, next) => {
   const id = parseInt(req.params.id || req.params.typeId, 10);
   if (isNaN(id) || id <= 0) {

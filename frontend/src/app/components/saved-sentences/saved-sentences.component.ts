@@ -30,7 +30,6 @@ export class SavedSentencesComponent {
 
   onEdit(sentence: Sentence): void {
     this.sentenceService.loadSentenceForEdit(sentence);
-    // Smooth scroll up to sentence builder canvas for mobile UX
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 

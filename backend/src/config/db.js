@@ -1,8 +1,6 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-// Construct pool configuration supporting either DATABASE_URL (e.g. Azure / Render / Cloud)
-// or individual connection parameters for local/docker environments.
 const poolConfig = process.env.DATABASE_URL
   ? {
     connectionString: process.env.DATABASE_URL,
@@ -17,19 +15,17 @@ const poolConfig = process.env.DATABASE_URL
     password: process.env.DB_PASSWORD || 'postgres',
     database: process.env.DB_NAME || 'sentence_builder',
     ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
-    max: 20, // maximum pool size
+    max: 20,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 5000,
   };
 
 const pool = new Pool(poolConfig);
 
-// Pool-level error handler
 pool.on('error', (err) => {
   console.error('Unexpected error on idle PostgreSQL client:', err);
 });
 
-// Helper query function with query timing for observability
 const query = async (text, params) => {
   const start = Date.now();
   try {
@@ -45,7 +41,6 @@ const query = async (text, params) => {
   }
 };
 
-// Initial database connection check
 const testConnection = async () => {
   try {
     const res = await pool.query('SELECT NOW() as current_time');

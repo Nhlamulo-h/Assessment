@@ -1,5 +1,4 @@
 <section class="sentence-builder-card">
-  <!-- Header / Mode Banner -->
   <div class="card-header">
     <div class="header-left">
       <div class="header-icon" [class.edit-mode-icon]="sentenceService.isEditing()">
@@ -35,7 +34,6 @@
       </div>
     </div>
 
-    <!-- Word & Character Counts -->
     <div class="stats-group">
       <div class="stat-pill">
         <span class="stat-num">{{ sentenceService.wordCount() }}</span>
@@ -48,7 +46,6 @@
     </div>
   </div>
 
-  <!-- US-03: Dynamic Sentence Canvas with Word Chips -->
   <div class="canvas-area" [class.has-tokens]="sentenceService.sentenceTokens().length > 0">
     @if (sentenceService.sentenceTokens().length === 0) {
       <div class="canvas-placeholder">
@@ -76,7 +73,6 @@
     }
   </div>
 
-  <!-- Live Formatted Preview String -->
   @if (sentenceService.sentenceTokens().length > 0) {
     <div class="formatted-preview-box">
       <span class="preview-tag">Preview:</span>
@@ -84,7 +80,6 @@
     </div>
   }
 
-  <!-- Action Buttons: Save (POST), Update (PUT), Cancel, Clear -->
   <div class="canvas-actions">
     <div class="action-left">
       <button
@@ -112,7 +107,6 @@
     </div>
 
     <div class="action-right">
-      <!-- US-04 (Save POST) & US-05 (Update PUT) -->
       <button
         type="button"
         class="btn-primary"

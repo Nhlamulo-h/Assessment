@@ -17,7 +17,7 @@ export interface WordsByTypeResponse {
 }
 
 export interface SelectedWordToken {
-  id: string; // unique instance ID (UUID/timestamp) for multiple occurrences in a sentence
+  id: string;
   text: string;
   typeColor?: string;
   typeName?: string;

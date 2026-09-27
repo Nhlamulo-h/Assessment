@@ -1,6 +1,4 @@
-/* Global Reset & Design System Variables */
 :root {
-  /* Light Theme Palette */
   --bg-body: #f8fafc;
   --bg-card: #ffffff;
   --bg-input: #f8fafc;
@@ -24,7 +22,6 @@
 
 [data-theme="dark"],
 .dark {
-  /* Premium Dark Theme Palette */
   --bg-body: #0a0f1d;
   --bg-card: #111827;
   --bg-input: #1f2937;
@@ -62,7 +59,6 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;

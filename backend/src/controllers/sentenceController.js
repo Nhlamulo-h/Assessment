@@ -1,9 +1,5 @@
 const db = require('../config/db');
 
-/**
- * Controller: GET /api/sentences
- * Returns all saved sentences ordered by latest update.
- */
 const getAllSentences = async (req, res, next) => {
   try {
     const result = await db.query(
@@ -22,10 +18,6 @@ const getAllSentences = async (req, res, next) => {
   }
 };
 
-/**
- * Controller: GET /api/sentences/:id
- * Returns details for a single sentence.
- */
 const getSentenceById = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -55,10 +47,6 @@ const getSentenceById = async (req, res, next) => {
   }
 };
 
-/**
- * Controller: POST /api/sentences
- * Persists a new sentence to the database.
- */
 const createSentence = async (req, res, next) => {
   try {
     const { text } = req.body;
@@ -80,10 +68,6 @@ const createSentence = async (req, res, next) => {
   }
 };
 
-/**
- * Controller: PUT /api/sentences/:id
- * Updates an existing sentence by ID.
- */
 const updateSentence = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -116,10 +100,6 @@ const updateSentence = async (req, res, next) => {
   }
 };
 
-/**
- * Bonus Controller: DELETE /api/sentences/:id
- * Deletes a sentence by ID.
- */
 const deleteSentence = async (req, res, next) => {
   try {
     const { id } = req.params;

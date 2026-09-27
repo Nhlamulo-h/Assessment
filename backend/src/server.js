@@ -5,11 +5,6 @@ const { testConnection, pool } = require('./config/db');
 const PORT = process.env.PORT || 5000;
 
 const startServer = async () => {
-  console.log('----------------------------------------------------');
-  console.log(' Starting Sentence Builder API Server...');
-  console.log('----------------------------------------------------');
-
-  // Verify DB connectivity
   const isDbConnected = await testConnection();
   if (!isDbConnected) {
     console.warn('[Warning] PostgreSQL connection test failed. Please verify DB credentials and host.');
@@ -20,10 +15,8 @@ const startServer = async () => {
     console.log(`[API] Health check available at http://localhost:${PORT}/api/health`);
     console.log(`[API] Word Types endpoint: http://localhost:${PORT}/api/word-types`);
     console.log(`[API] Sentences endpoint:  http://localhost:${PORT}/api/sentences`);
-    console.log('----------------------------------------------------');
   });
 
-  // Graceful shutdown handler
   const shutdown = async (signal) => {
     console.log(`\n[API] Received ${signal}. Gracefully shutting down...`);
     server.close(async () => {

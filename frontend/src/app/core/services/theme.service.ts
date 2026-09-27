@@ -18,14 +18,12 @@ export class ThemeService {
   private initializeTheme(): void {
     if (typeof window === 'undefined') return;
 
-    // Check localStorage first
     const savedTheme = localStorage.getItem(this.THEME_KEY) as Theme | null;
     if (savedTheme === 'light' || savedTheme === 'dark') {
       this.setTheme(savedTheme);
       return;
     }
 
-    // Fall back to system preference
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     this.setTheme(prefersDark ? 'dark' : 'light');
   }

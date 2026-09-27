@@ -1,6 +1,3 @@
-/**
- * Centralized Global Error Handler Middleware
- */
 const errorHandler = (err, req, res, next) => {
   console.error('Unhandled Application Error:', {
     message: err.message,
@@ -19,9 +16,6 @@ const errorHandler = (err, req, res, next) => {
   });
 };
 
-/**
- * 404 Route Not Found Middleware
- */
 const notFoundHandler = (req, res, next) => {
   res.status(404).json({
     success: false,

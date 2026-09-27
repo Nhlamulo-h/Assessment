@@ -1,36 +1,26 @@
--- ============================================================================
--- 1Life Full-Stack Technical Assessment: Sentence Builder
--- Database Schema & Seed Script for PostgreSQL
--- ============================================================================
-
--- Drop existing tables in reverse dependency order if resetting
 DROP TABLE IF EXISTS sentences CASCADE;
 DROP TABLE IF EXISTS words CASCADE;
 DROP TABLE IF EXISTS word_types CASCADE;
 
--- 1. WORD TYPES TABLE (9 Grammatical Parts of Speech)
 CREATE TABLE word_types (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE,
     code VARCHAR(20) NOT NULL UNIQUE,
     description TEXT,
-    color_code VARCHAR(10) NOT NULL DEFAULT '#3b82f6',
+    color_code VARCHAR(10) NOT NULL DEFAULT '#6366F1',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- 2. WORDS TABLE
 CREATE TABLE words (
     id SERIAL PRIMARY KEY,
     word_type_id INTEGER NOT NULL REFERENCES word_types(id) ON DELETE CASCADE,
     text VARCHAR(100) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT uq_word_type_text UNIQUE (word_type_id, text) 
+    CONSTRAINT uq_word_type_text UNIQUE (word_type_id, text)
 );
 
--- Index for high-performance lookup of words by word_type_id
 CREATE INDEX idx_words_type_id ON words(word_type_id);
 
--- 3. SENTENCES TABLE (Storage for dynamically assembled sentences)
 CREATE TABLE sentences (
     id SERIAL PRIMARY KEY,
     text TEXT NOT NULL,
@@ -38,7 +28,6 @@ CREATE TABLE sentences (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Trigger function to auto-update 'updated_at' column on row modification
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -52,28 +41,19 @@ BEFORE UPDATE ON sentences
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();
 
--- ============================================================================
--- SEED DATA: 9 Grammatical Word Types
--- ============================================================================
 INSERT INTO word_types (id, name, code, description, color_code) VALUES
-(1, 'Noun', 'noun', 'A person, place, thing, or abstract idea', '#6366F1'),         -- Electric Indigo
-(2, 'Verb', 'verb', 'An action, state, or occurrence', '#10B981'),                  -- Emerald Green
-(3, 'Adjective', 'adjective', 'A word describing a noun or pronoun', '#F59E0B'),     -- Amber Gold
-(4, 'Adverb', 'adverb', 'Modifies an action, adjective, or another adverb', '#8B5CF6'), -- Royal Violet
-(5, 'Pronoun', 'pronoun', 'Substitutes for a noun or noun phrase', '#EC4899'),      -- Coral Pink
-(6, 'Preposition', 'preposition', 'Shows spatial, temporal, or logical relationship', '#14B8A6'), -- Cyan / Teal
-(7, 'Conjunction', 'conjunction', 'Connects words, clauses, or sentences', '#F97316'), -- Sunset Orange
-(8, 'Determiner', 'determiner', 'Introduces a noun and provides context', '#64748B'), -- Slate Gray
-(9, 'Exclamation', 'exclamation', 'Expresses sudden emotion or exclamation', '#EF4444'); -- Bright Crimson
+(1, 'Noun', 'noun', 'A person, place, thing, or abstract idea', '#6366F1'),
+(2, 'Verb', 'verb', 'An action, state, or occurrence', '#10B981'),
+(3, 'Adjective', 'adjective', 'A word describing a noun or pronoun', '#F59E0B'),
+(4, 'Adverb', 'adverb', 'Modifies an action, adjective, or another adverb', '#8B5CF6'),
+(5, 'Pronoun', 'pronoun', 'Substitutes for a noun or noun phrase', '#EC4899'),
+(6, 'Preposition', 'preposition', 'Shows spatial, temporal, or logical relationship', '#14B8A6'),
+(7, 'Conjunction', 'conjunction', 'Connects words, clauses, or sentences', '#F97316'),
+(8, 'Determiner', 'determiner', 'Introduces a noun and provides context', '#64748B'),
+(9, 'Exclamation', 'exclamation', 'Expresses sudden emotion or exclamation', '#EF4444');
 
--- Synchronize sequence after manual ID inserts
 SELECT setval('word_types_id_seq', (SELECT MAX(id) FROM word_types));
 
--- ============================================================================
--- SEED DATA: Realistic vocabulary for all 9 Word Types
--- ============================================================================
-
--- 1. Nouns
 INSERT INTO words (word_type_id, text) VALUES
 (1, 'cat'),
 (1, 'dog'),
@@ -91,7 +71,6 @@ INSERT INTO words (word_type_id, text) VALUES
 (1, 'journey'),
 (1, 'architecture');
 
--- 2. Verbs
 INSERT INTO words (word_type_id, text) VALUES
 (2, 'runs'),
 (2, 'jumps'),
@@ -109,7 +88,6 @@ INSERT INTO words (word_type_id, text) VALUES
 (2, 'powers'),
 (2, 'illuminates');
 
--- 3. Adjectives
 INSERT INTO words (word_type_id, text) VALUES
 (3, 'quick'),
 (3, 'brilliant'),
@@ -127,7 +105,6 @@ INSERT INTO words (word_type_id, text) VALUES
 (3, 'innovative'),
 (3, 'clever');
 
--- 4. Adverbs
 INSERT INTO words (word_type_id, text) VALUES
 (4, 'quickly'),
 (4, 'gracefully'),
@@ -142,7 +119,6 @@ INSERT INTO words (word_type_id, text) VALUES
 (4, 'curiously'),
 (4, 'eagerly');
 
--- 5. Pronouns
 INSERT INTO words (word_type_id, text) VALUES
 (5, 'I'),
 (5, 'you'),
@@ -157,7 +133,6 @@ INSERT INTO words (word_type_id, text) VALUES
 (5, 'ourselves'),
 (5, 'who');
 
--- 6. Prepositions
 INSERT INTO words (word_type_id, text) VALUES
 (6, 'on'),
 (6, 'under'),
@@ -172,7 +147,6 @@ INSERT INTO words (word_type_id, text) VALUES
 (6, 'toward'),
 (6, 'upon');
 
--- 7. Conjunctions
 INSERT INTO words (word_type_id, text) VALUES
 (7, 'and'),
 (7, 'but'),
@@ -186,7 +160,6 @@ INSERT INTO words (word_type_id, text) VALUES
 (7, 'unless'),
 (7, 'whereas');
 
--- 8. Determiners
 INSERT INTO words (word_type_id, text) VALUES
 (8, 'the'),
 (8, 'a'),
@@ -201,7 +174,6 @@ INSERT INTO words (word_type_id, text) VALUES
 (8, 'any'),
 (8, 'another');
 
--- 9. Exclamations
 INSERT INTO words (word_type_id, text) VALUES
 (9, 'Wow!'),
 (9, 'Eureka!'),
@@ -214,7 +186,6 @@ INSERT INTO words (word_type_id, text) VALUES
 (9, 'Hurrah!'),
 (9, 'Alas!');
 
--- Initial Seed Sentence (Example to verify GET /api/sentences out of the box)
 INSERT INTO sentences (text) VALUES
 ('The agile engineer quickly builds an innovative algorithm and everyone celebrates .'),
 ('Eureka! A brilliant robot gracefully navigates through the forest .');

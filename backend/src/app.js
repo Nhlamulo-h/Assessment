@@ -3,22 +3,18 @@ const cors = require('cors');
 const morgan = require('morgan');
 const db = require('./config/db');
 
-// Route Handlers
 const wordTypeRoutes = require('./routes/wordTypeRoutes');
 const wordRoutes = require('./routes/wordRoutes');
 const sentenceRoutes = require('./routes/sentenceRoutes');
 
-// Middleware
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
 
 const app = express();
 
-// Middleware: Logging
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }
 
-// Middleware: Cross-Origin Resource Sharing (CORS)
 const allowedOrigins = [
   process.env.CLIENT_ORIGIN || 'http://localhost:4200',
   'http://localhost:4200',
@@ -29,7 +25,6 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps, curl, postman) or matching whitelist
       if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV === 'development') {
         return callback(null, true);
       }
@@ -41,11 +36,9 @@ app.use(
   })
 );
 
-// Middleware: Body Parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Health Check Endpoint (useful for Docker healthchecks and Azure App Service probes)
 app.get('/api/health', async (req, res) => {
   try {
     const dbCheck = await db.query('SELECT 1 as healthy');
@@ -65,12 +58,10 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
-// Mount API Resource Routes
 app.use('/api/word-types', wordTypeRoutes);
 app.use('/api/words', wordRoutes);
 app.use('/api/sentences', sentenceRoutes);
 
-// Root informational endpoint
 app.get('/', (req, res) => {
   res.json({
     name: 'Sentence Builder API',
@@ -85,10 +76,7 @@ app.get('/', (req, res) => {
   });
 });
 
-// Middleware: Route Not Found (404)
 app.use(notFoundHandler);
-
-// Middleware: Global Error Handling
 app.use(errorHandler);
 
 module.exports = app;
