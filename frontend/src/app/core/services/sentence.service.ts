@@ -104,7 +104,7 @@ export class SentenceService {
     const token: SelectedWordToken = {
       id: `${word.id}-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
       text: word.text,
-      typeColor: selected?.color_code || '#3b82f6',
+      typeColor: selected?.color_code || '#6366F1',
       typeName: selected?.name || 'Word',
     };
 

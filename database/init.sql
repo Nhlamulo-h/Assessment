@@ -56,15 +56,15 @@ EXECUTE FUNCTION update_updated_at_column();
 -- SEED DATA: 9 Grammatical Word Types
 -- ============================================================================
 INSERT INTO word_types (id, name, code, description, color_code) VALUES
-(1, 'Noun', 'noun', 'A person, place, thing, or abstract idea', '#3b82f6'),         -- Blue
-(2, 'Verb', 'verb', 'An action, state, or occurrence', '#10b981'),                  -- Green
-(3, 'Adjective', 'adjective', 'A word describing a noun or pronoun', '#f59e0b'),     -- Amber/Yellow
-(4, 'Adverb', 'adverb', 'Modifies an action, adjective, or another adverb', '#8b5cf6'), -- Purple
-(5, 'Pronoun', 'pronoun', 'Substitutes for a noun or noun phrase', '#ec4899'),      -- Pink
-(6, 'Preposition', 'preposition', 'Shows spatial, temporal, or logical relationship', '#06b6d4'), -- Cyan
-(7, 'Conjunction', 'conjunction', 'Connects words, clauses, or sentences', '#f97316'), -- Orange
-(8, 'Determiner', 'determiner', 'Introduces a noun and provides context', '#64748b'), -- Slate
-(9, 'Exclamation', 'exclamation', 'Expresses sudden emotion or exclamation', '#ef4444'); -- Red
+(1, 'Noun', 'noun', 'A person, place, thing, or abstract idea', '#6366F1'),         -- Electric Indigo
+(2, 'Verb', 'verb', 'An action, state, or occurrence', '#10B981'),                  -- Emerald Green
+(3, 'Adjective', 'adjective', 'A word describing a noun or pronoun', '#F59E0B'),     -- Amber Gold
+(4, 'Adverb', 'adverb', 'Modifies an action, adjective, or another adverb', '#8B5CF6'), -- Royal Violet
+(5, 'Pronoun', 'pronoun', 'Substitutes for a noun or noun phrase', '#EC4899'),      -- Coral Pink
+(6, 'Preposition', 'preposition', 'Shows spatial, temporal, or logical relationship', '#14B8A6'), -- Cyan / Teal
+(7, 'Conjunction', 'conjunction', 'Connects words, clauses, or sentences', '#F97316'), -- Sunset Orange
+(8, 'Determiner', 'determiner', 'Introduces a noun and provides context', '#64748B'), -- Slate Gray
+(9, 'Exclamation', 'exclamation', 'Expresses sudden emotion or exclamation', '#EF4444'); -- Bright Crimson
 
 -- Synchronize sequence after manual ID inserts
 SELECT setval('word_types_id_seq', (SELECT MAX(id) FROM word_types));
